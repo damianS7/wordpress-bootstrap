@@ -1,0 +1,18 @@
+/*
+!.gitignore
+!README.md
+
+## Plugin
+!wp-content
+wp-content/*
+!wp-content/plugins
+wp-content/plugins/*
+!wp-content/plugins/xtube/
+
+## Theme
+!wp-content/themes
+wp-content/themes/*
+!wp-content/themes/xtube/
+
+
+
