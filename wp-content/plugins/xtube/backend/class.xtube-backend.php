@@ -7,32 +7,32 @@ use Xtube\Backend\Controllers\TagsController;
 use Xtube\Backend\Controllers\PostsController;
 use Xtube\Backend\Controllers\CommentsController;
 
-require_once(PLUGIN_DIR . 'backend/controllers/class.settings-controller.php');
-require_once(PLUGIN_DIR . 'backend/controllers/class.tags-controller.php');
-require_once(PLUGIN_DIR . 'backend/controllers/class.posts-controller.php');
-require_once(PLUGIN_DIR . 'backend/controllers/class.imports-controller.php');
-require_once(PLUGIN_DIR . 'backend/controllers/class.comments-controller.php');
+require_once(PLUGIN_DIR . 'backend/controllers/class.setting-controller.php');
+require_once(PLUGIN_DIR . 'backend/controllers/class.tag-controller.php');
+require_once(PLUGIN_DIR . 'backend/controllers/class.post-controller.php');
+require_once(PLUGIN_DIR . 'backend/controllers/class.import-controller.php');
+require_once(PLUGIN_DIR . 'backend/controllers/class.reported-comment-controller.php');
 require_once(PLUGIN_DIR . 'backend/includes/importers/class.xvideos.php');
 require_once(PLUGIN_DIR . 'backend/includes/importers/class.pornhub.php');
 require_once(PLUGIN_DIR . 'backend/includes/importers/class.video.php');
-require_once(PLUGIN_DIR . 'backend/models/class.tags-model.php');
-require_once(PLUGIN_DIR . 'backend/models/class.settings-model.php');
-require_once(PLUGIN_DIR . 'backend/models/class.posts-model.php');
-require_once(PLUGIN_DIR . 'backend/models/class.videos-model.php');
+require_once(PLUGIN_DIR . 'backend/models/class.tag-model.php');
+require_once(PLUGIN_DIR . 'backend/models/class.setting-model.php');
+require_once(PLUGIN_DIR . 'backend/models/class.post-model.php');
+require_once(PLUGIN_DIR . 'backend/models/class.video-model.php');
 require_once(PLUGIN_DIR . 'backend/models/class.reported-comment-model.php');
 
 class XtubeBackend {
     private $settings_controller;
     private $posts_controller;
     private $tags_controller;
-    private $import_videos_controller;
+    private $imports_controller;
     private $reported_comments_controller;
 
     public function __construct() {
         $this->tags_controller = new TagsController();
         $this->posts_controller = new PostsController();
         $this->settings_controller = new SettingsController();
-        $this->import_videos_controller = new ImportsController();
+        $this->imports_controller = new ImportsController();
         $this->reported_comments_controller = new CommentsController();
     }
     
@@ -41,7 +41,7 @@ class XtubeBackend {
         add_submenu_page('xtube-menu', 'Xtube settings', 'Settings', 'manage_options', 'xtube-settings', array($this->settings_controller, 'render'));
         add_submenu_page('xtube-menu', 'Manage posts', 'Manage Posts', 'manage_options', 'xtube-posts', array($this->posts_controller, 'render'));
         add_submenu_page('xtube-menu', 'Manage tags', 'Manage tags', 'manage_options', 'xtube-tags', array($this->tags_controller, 'render'));
-        add_submenu_page('xtube-menu', 'Xtube import', 'Import videos', 'manage_options', 'xtube-import', array($this->import_videos_controller, 'render'));
+        add_submenu_page('xtube-menu', 'Xtube import', 'Import videos', 'manage_options', 'xtube-import', array($this->imports_controller, 'render'));
         add_submenu_page('xtube-menu', 'Reported comments', 'Reported comments', 'manage_options', 'xtube-comments', array($this->reported_comments_controller, 'render'));
         add_submenu_page('xtube-menu', 'Reported videos', 'Reported videos', 'manage_options', 'xtube-reports', array($this->settings_controller, 'view_settings'));
     }
@@ -51,12 +51,23 @@ class XtubeBackend {
     }
 
     public function add_custom_query_var($vars) {
-        die('varrss');
         $vars[] = 'xtb_pagination';
         $vars[] = 'xtb_keyword';
         $vars[] = 'xtb_import_server';
+        $vars[] = 'xtb_server';
         $vars[] = 'page';
         return $vars;
+    }
+
+    // Forma segura de obtener valores de $_GET
+    public static function get_query_var($var, $default = '') {
+        if (isset($_GET[$var])) {
+            if (!empty($_GET[$var])) {
+                return $_GET[$var];
+            }
+        }
+
+        return $default;
     }
 
     public function xtube_queue() {
@@ -75,7 +86,7 @@ class XtubeBackend {
         add_action('admin_menu', array( $this, 'plugin_menu' ));
 
         add_action('admin_post_reported_comments', array($this->reported_comments_controller, 'handle_forms'));
-        add_action('admin_post_import_videos', array($this->import_videos_controller, 'handle_forms'));
+        add_action('admin_post_imports_controller', array($this->imports_controller, 'handle_forms'));
         add_action('admin_post_tags_controller', array($this->tags_controller, 'handle_forms'));
         add_action('admin_post_posts_controller', array($this->posts_controller, 'handle_forms'));
         add_action('admin_post_settings_controller', array($this->settings_controller, 'handle_forms'));
