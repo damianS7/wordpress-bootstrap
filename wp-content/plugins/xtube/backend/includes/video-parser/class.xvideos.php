@@ -49,11 +49,13 @@ class XVideos {
             if (empty($link->getAttribute('href'))) {
                 $link->setAttribute('href', $url);
             }
-            
+
             // Pagina
-            $parsed_url = parse_url($link->getAttribute('href'));
-            $parsed_str = parse_str($parsed_url['query'], $output);
-            $page = $output['p'];
+            if ($link->nodeValue != '...') {
+                $parsed_url = parse_url($link->getAttribute('href'));
+                $parsed_str = parse_str($parsed_url['query'], $output);
+                $page = $output['p'];
+            }
 
             if (empty($page)) {
                 $page = 0;
@@ -64,6 +66,10 @@ class XVideos {
                 $node->setAttribute('class', 'page-item active');
             } else {
                 $node->setAttribute('class', 'page-item');
+            }
+
+            if ($link->nodeValue == '...') {
+                $node->setAttribute('class', 'page-item disabled');
             }
 
             // Construccion de la url

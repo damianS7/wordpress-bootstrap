@@ -46,14 +46,19 @@ class Pornhub {
             $videos[] = $video;
         }
         
+        // remove pre
         $nodes = $xpath->query("//div[@class='nf-wrapper']/div[@class='pagination3']/ul/li");
         foreach ($nodes as $node) {
             $link = $node->getElementsByTagName('a')->item(0);
             if ($link === null) {
-                $node->getElementsByTagName('span')->item(0)->setAttribute('class', 'page-link');
-                $node->setAttribute('class', 'page-item');
-                $link = $node;
-                $link->setAttribute('href', $url);
+                $span = $node->getElementsByTagName('span')->item(0);
+                $span->setAttribute('class', 'page-link disabled');
+                
+                if ($span->nodeValue != ' ... ') {
+                    $node->setAttribute('class', 'page-item active');
+                }
+                
+                continue;
             }
 
             $images = $link->getElementsByTagName('img');
@@ -64,10 +69,15 @@ class Pornhub {
             // Pagina
             $parsed_url = parse_url($link->getAttribute('href'));
             $parsed_str = parse_str($parsed_url['query'], $output);
-            $page = $output['page'];
+            if (isset($output['page'])) {
+                $page = $output['page'];
+            } else {
+                $page = 1;
+            }
+            
             
             $link->setAttribute('class', 'page-link');
-            //echo '<br>page: ' . $page . ' vs ' . $_GET['xtb_pagination'] . '<br>';
+            //echo '<br>page: ' . $page . ' vs ' . $_GET['xtb_paginatio'] . '<br>';
             if ($page == $_GET['xtb_pagination']) {
                 $node->setAttribute('class', 'page-item active');
             } else {
