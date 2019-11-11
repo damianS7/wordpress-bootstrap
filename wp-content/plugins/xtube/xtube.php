@@ -31,7 +31,7 @@ if (is_admin()) {
 
 // FRONTEND
 if (!is_admin()) {
-    //require_once(PLUGIN_DIR . 'frontend/class.wordpress-xtube-frontend.php');
-    //$frontend = new Wordpress_Xtube_Frontend();
-    //add_action('init', array( $frontend, 'init' ));
+    require_once(PLUGIN_DIR . 'frontend/class.xtube-frontend.php');
+    $frontend = new Xtube\Frontend\XtubeFrontend();
+    add_action('init', array( $frontend, 'init' ));
 }
