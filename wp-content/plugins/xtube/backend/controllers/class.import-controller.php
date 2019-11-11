@@ -5,7 +5,6 @@ use Xtube\Backend\XtubeBackend;
 use Xtube\Backend\Importers\XVideos;
 use Xtube\Backend\Importers\Pornhub;
 use Xtube\Backend\Models\Video;
-use Xtube\Backend\Models\Post;
 
 class ImportsController {
     public function __construct() {
@@ -45,18 +44,27 @@ class ImportsController {
 
             $videos_marked_to_import = array();
 
+            $imported = 0;
             // Indices seleccionados
             foreach ($video_index as $index) {
                 $videos_marked_to_import[] = $video_search['videos'][$index];
                 $video = $video_search['videos'][$index];
-
-                $video_id = Video::add_video($video->url, $video->img_src);
-
-                if (Post::add_post($video->title, '', '', $video_id)) {
+                
+                if (Video::add_video(
+                    $video->url,
+                    $video->title,
+                    $video->img_src,
+                    $video->duration,
+                    $video->tags,
+                    $video->upvotes,
+                    $video->downvotes,
+                    $video->views
+                )) {
+                    $imported++;
                 }
             }
 
-            $data['success'] = 'Imported: ' . count($videos_marked_to_import);
+            $data['success'] = 'Imported: ' . $imported . ' / ' . count($videos_marked_to_import);
             $data['videos_to_import'] = $videos_marked_to_import;
             
             set_transient('imports_view_data', $data, 60*60*2);
