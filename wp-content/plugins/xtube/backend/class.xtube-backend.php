@@ -39,7 +39,7 @@ class XtubeBackend {
     public function plugin_menu() {
         add_menu_page('Xtube Settings', 'Xtube', 'manage_options', 'xtube-menu', array($this->settings_controller, 'view_settings'));
         add_submenu_page('xtube-menu', 'Xtube settings', 'Settings', 'manage_options', 'xtube-settings', array($this->settings_controller, 'render'));
-        add_submenu_page('xtube-menu', 'Manage posts', 'Manage Posts', 'manage_options', 'xtube-posts', array($this->posts_controller, 'render'));
+        add_submenu_page('xtube-menu', 'Manage posts', 'Add video', 'manage_options', 'xtube-posts', array($this->posts_controller, 'render'));
         add_submenu_page('xtube-menu', 'Manage tags', 'Manage tags', 'manage_options', 'xtube-tags', array($this->tags_controller, 'render'));
         add_submenu_page('xtube-menu', 'Xtube import', 'Import videos', 'manage_options', 'xtube-import', array($this->imports_controller, 'render'));
         add_submenu_page('xtube-menu', 'Reported comments', 'Reported comments', 'manage_options', 'xtube-comments', array($this->reported_comments_controller, 'render'));
