@@ -1,5 +1,4 @@
 <?php $videos = Xtube\Frontend\Controllers\VideoController::get_videos(); ?>
-
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
@@ -10,7 +9,6 @@
 
 <div class="container">
     <div class="row">
-
         <?php $count = 1; foreach ($videos as $video): ?>
         <?php if ($count % 4 == 1): ?>
         <div class="w-100"></div>
@@ -24,7 +22,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-12 text-center">
-                    <a class="" href="<?php echo $video->url; ?>"><?php echo $video->title; ?></a>
+                    <a class="" href="<?php echo Xtube\Frontend\XtubeFrontend::view_url('video', $video->id); ?>"><?php echo $video->title; ?></a>
                 </div>
             </div>
             <div class="row">

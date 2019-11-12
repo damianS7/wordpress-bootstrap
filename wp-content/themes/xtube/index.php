@@ -8,9 +8,12 @@
 ?>
 <?php get_header(); ?>
 
-<?php include_once('tag-presentation.php'); ?>
+<?php include_once('popular-tags.php'); ?>
 
 <hr>
+
+
+
 
 <?php if (Xtube\Frontend\XtubeFrontend::get_view_name() == 'tag'): ?>
     <?php include_once('tag.php'); ?>
@@ -19,7 +22,7 @@
 <?php elseif (Xtube\Frontend\XtubeFrontend::get_view_name() == 'video'): ?>
     <?php include_once('video.php'); ?>
 <?php else: ?>
-    <?php include_once('list.php'); ?>
+    <?php include_once('videos.php'); ?>
 <?php endif; ?>
 
 <?php get_footer(); ?>
