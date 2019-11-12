@@ -9,8 +9,8 @@ class XtubeInstall {
         $table_videos = 'CREATE TABLE IF NOT EXISTS XTB_VIDEOS (
             id INT AUTO_INCREMENT NOT NULL,
             url VARCHAR(300) NOT NULL UNIQUE,
+            iframe VARCHAR(300) NOT NULL, 
             title VARCHAR(255) NOT NULL,
-            tags VARCHAR(255) NOT NULL,
             description VARCHAR(255) NOT NULL,
             img_src VARCHAR(300) NOT NULL,
             duration VARCHAR(10) NOT NULL DEFAULT(0),
@@ -19,6 +19,15 @@ class XtubeInstall {
             downvotes INT NOT NULL DEFAULT(0),
             posted_at TIMESTAMP NOT NULL,
             PRIMARY KEY(id)
+        ) ENGINE=InnoDB;';
+
+        $table_video_tags = 'CREATE TABLE IF NOT EXISTS XTB_VIDEO_TAGS (
+            id INT AUTO_INCREMENT NOT NULL,
+            video_id INT NOT NULL,
+            tag_id INT NOT NULL,
+            PRIMARY KEY(id),
+            FOREIGN KEY(video_id) REFERENCES XTB_VIDEOS(id),
+            FOREIGN KEY(tag_id) REFERENCES XTB_TAGS(id)
         ) ENGINE=InnoDB;';
         
         $table_settings = 'CREATE TABLE IF NOT EXISTS XTB_SETTINGS (
@@ -31,7 +40,6 @@ class XtubeInstall {
         $table_tags = 'CREATE TABLE IF NOT EXISTS XTB_TAGS (
             id INT AUTO_INCREMENT NOT NULL,
             name VARCHAR(50) NOT NULL UNIQUE,
-            description TEXT,
             PRIMARY KEY(id)
         ) ENGINE=InnoDB;';
 
@@ -63,6 +71,7 @@ class XtubeInstall {
         $wpdb->query($table_tags);
         $wpdb->query($table_settings);
         $wpdb->query($table_videos);
+        $wpdb->query($table_video_tags);
         $wpdb->query($table_comments);
         $wpdb->query($table_reported_comments);
         $wpdb->query($table_reported_videos);
