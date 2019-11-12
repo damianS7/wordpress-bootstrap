@@ -12,6 +12,9 @@ function xtb_enqueue_styles() {
 
     wp_register_style('prefix_bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css');
     wp_enqueue_style('prefix_bootstrap');
+    
+    wp_register_style('prefix_fontawesome', 'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+    wp_enqueue_style('prefix_fontawesome');
 }
 
 // Registro de posiciones del menu

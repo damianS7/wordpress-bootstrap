@@ -14,3 +14,14 @@ Text Domain: xtube
 footer {
     background-color: black;
 }
+
+.button-go-up {
+    display:scroll;
+    position:fixed;
+    bottom:30px;
+    right:40px;
+    color:white;
+    background-color:#333;
+    padding:15px 25px;
+    z-index: 9999999999;
+}

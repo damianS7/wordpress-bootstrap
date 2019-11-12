@@ -12,18 +12,27 @@
  */
 
 ?>
+
 <footer>
     <div class="container">
         <div class="row">
-            <div class="col-sm">1</div>
-            <div class="col-sm">2</div>
-            <div class="col-sm">3</div>
-            <div class="col-sm">4</div>
+            <div class="col-sm">
+                <?php wp_nav_menu(array('container' => '', 'menu_class' => 'navbar-nav mr-auto', 'theme_location'  => 'footer-nav-1')); ?>
+            </div>
+            <div class="col-sm">
+                <?php wp_nav_menu(array('container' => '', 'menu_class' => 'navbar-nav mr-auto', 'theme_location'  => 'footer-nav-2')); ?>
+            </div>
+            <div class="col-sm">
+                <?php wp_nav_menu(array('container' => '', 'menu_class' => 'navbar-nav mr-auto', 'theme_location'  => 'footer-nav-social')); ?>
+            </div>
         </div>
     </div>
 </footer>
 
 <?php wp_footer(); ?>
+<a class="button-go-up" href="<?php echo $_SERVER["REQUEST_URI"] ?>#">
+    <i class="fa fa-chevron-up"></i>
+</a>
 
 </body>
 
