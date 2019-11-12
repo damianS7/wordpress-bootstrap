@@ -6,7 +6,6 @@
         </div>
     </div>
     <hr>
-
     <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="POST">
         <div class="row">
             <div class="col-sm-8 form-group">
@@ -68,8 +67,20 @@
             <?php endif; ?>
         </div>
         <div class="row">
-            <input type="hidden" name="action" value="imports_controller">
-            <button class="btn btn-primary" type="submit" name="import_submit">Import</button>
+            <div class="col-sm-8">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="tags"
+                        placeholder="Tags for the video split by a comma">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <input type="hidden" name="action" value="imports_controller">
+                    <button class="btn btn-primary" type="submit" name="import_submit">Import</button>
+                    <button class="btn btn-primary"
+                        onClick="jQuery('.custom-control-input').click();return false;">Select ALL</button>
+                </div>
+            </div>
         </div>
     </form>
 

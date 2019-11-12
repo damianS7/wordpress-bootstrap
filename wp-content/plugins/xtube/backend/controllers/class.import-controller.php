@@ -5,6 +5,7 @@ use Xtube\Backend\XtubeBackend;
 use Xtube\Backend\Importers\XVideos;
 use Xtube\Backend\Importers\Pornhub;
 use Xtube\Backend\Models\Video;
+use Xtube\Backend\Models\Tag;
 
 class ImportsController {
     public function __construct() {
@@ -26,10 +27,10 @@ class ImportsController {
 
             $url = add_query_arg(
                 array(
-                        'page' => 'xtube-import',
-                        'xtb_server' => $server,
-                        'xtb_keyword' => $keyword,
-                        'xtb_pagination' => 1),
+                    'page' => 'xtube-import',
+                    'xtb_server' => $server,
+                    'xtb_keyword' => $keyword,
+                    'xtb_pagination' => 1),
                 admin_url() . 'admin.php'
             );
 
@@ -49,17 +50,30 @@ class ImportsController {
             foreach ($video_index as $index) {
                 $videos_marked_to_import[] = $video_search['videos'][$index];
                 $video = $video_search['videos'][$index];
-                
-                if (Video::add_video(
+                $video_id = Video::add_video(
                     $video->url,
                     $video->title,
                     $video->img_src,
                     $video->duration,
-                    $video->tags,
                     $video->upvotes,
                     $video->downvotes,
-                    $video->views
-                )) {
+                    $video->views,
+                    $video->iframe
+                );
+
+                if ($video_id !== null) {
+                    // Agregar tags del video a la db
+                    $tags = explode(',', sanitize_text_field($_POST['tags']));
+                    
+                    foreach ($tags as $tag) {
+                        $tag = trim($tag);
+                        Tag::add_tag_ignore($tag);
+                        
+                        // Buscamos el id del tag
+                        $tag_id = Tag::get_tag_id($tag);
+
+                        Tag::add_tag_to_video($video_id, $tag_id);
+                    }
                     $imported++;
                 }
             }
