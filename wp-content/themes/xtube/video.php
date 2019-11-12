@@ -3,13 +3,10 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-sm">
+        <div class="col-sm-9">
             <div class="row">
                 <div class="col-sm-12 text-center">
-                    <iframe src="<?php echo $video->url; ?>" frameborder="0" width="560" height="315"
-                        scrolling="no" allowfullscreen></iframe>
-                    <iframe src="https://es.pornhub.com/embed/ph5d8d40c04fdf0" frameborder="0" width="560" height="315"
-                        scrolling="no" allowfullscreen></iframe>
+                    <?php echo $video->iframe; ?>
                 </div>
             </div>
             <div class="row">
@@ -24,6 +21,21 @@
             </div>
             <div class="row">
                 <div class="col-sm-12 text-center">
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="col-sm-3">
+            <div class="row">
+                <div class="col-sm">
+                    WIDGET
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    AD
                 </div>
             </div>
         </div>
