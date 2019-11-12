@@ -1,17 +1,25 @@
 <?php
 /**
- * Front to the WordPress application. This file doesn't do anything, but loads
- * wp-blog-header.php which does and tells WordPress to load the theme.
- *
  * @package WordPress
+ * @subpackage Xtube
+ * @since 1.0
+ * @version 1.0
  */
+?>
+<?php get_header(); ?>
 
-/**
- * Tells WordPress to load the WordPress theme and output it.
- *
- * @var bool
- */
-define( 'WP_USE_THEMES', true );
+<?php include_once('tag-presentation.php'); ?>
 
-/** Loads the WordPress Environment and Template */
-require( dirname( __FILE__ ) . '/wp-blog-header.php' );
+<hr>
+
+<?php if (Xtube\Frontend\XtubeFrontend::get_view_name() == 'tag'): ?>
+    <?php include_once('tag.php'); ?>
+<?php elseif (Xtube\Frontend\XtubeFrontend::get_view_name() == 'search'): ?>
+    <?php include_once('search.php'); ?>
+<?php elseif (Xtube\Frontend\XtubeFrontend::get_view_name() == 'video'): ?>
+    <?php include_once('video.php'); ?>
+<?php else: ?>
+    <?php include_once('list.php'); ?>
+<?php endif; ?>
+
+<?php get_footer(); ?>

@@ -1,0 +1,16 @@
+/*
+Theme Name: Xtube
+Theme URI: https://github.com/damianS7/wordpress-xtube
+Author: damianS7
+Author URI: https://github.com/damianS7/
+Description: Theme para utilizar junto con el plugon xtube
+Version: 0.1
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: xtube
+*/
+
+
+footer {
+    background-color: black;
+}
