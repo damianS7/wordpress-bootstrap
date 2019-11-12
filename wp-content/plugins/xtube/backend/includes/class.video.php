@@ -7,7 +7,9 @@ class Video {
     public $duration;
     public $url;
     public $img_src;
-    
-    public $server;
-    public $domain;
+    public $iframe;
+    public $tags = '';
+    public $upvotes = '0';
+    public $downvotes = '0';
+    public $views = '0';
 }

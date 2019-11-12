@@ -5,6 +5,16 @@ use Xtube\Backend\Importers\Video;
 
 class XVideos {
     private static $url = 'https://xvideos.com';
+
+    public static function get_video_code($url) {
+        $parsed_url = parse_url($url);
+        $parsed_str = parse_str($parsed_url['query'], $output);
+        return $output['viewkey'];
+    }
+
+    public static function get_iframe($video_code) {
+        return "<iframe src=\"https://www.xvideos.com/embedframe/$video_code\" frameborder=0 width=510 height=400 scrolling=no allowfullscreen=allowfullscreen></iframe>";
+    }
     
     public static function get_videos($term = 'teen', $page = '0') {
         $url = 'https://www.xvideos.com/?k=' . $term . '&p=' . $page;
@@ -36,6 +46,9 @@ class XVideos {
             // Video thumb
             $node = $xpath->query("div[@class='thumb-inside']//img", $element);
             $video->img_src = $node->item(0)->getAttribute('data-src') ;
+
+            $video->iframe = Xvideos::get_iframe($video->id);
+
             $videos[] = $video;
         }
         

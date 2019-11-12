@@ -5,6 +5,17 @@ use Xtube\Backend\Importers\Video;
 
 class Pornhub {
     private static $url = 'https://pornhub.com';
+
+    public static function get_video_code($url) {
+        $parsed_url = parse_url($url);
+        $parsed_str = parse_str($parsed_url['query'], $output);
+        return $output['viewkey'];
+    }
+
+    public static function get_iframe($video_code) {
+        return "<iframe src=\"https://es.pornhub.com/embed/$video_code\" frameborder=\"0\" width=\"560\" height=\"315\"
+            scrolling=\"no\" allowfullscreen></iframe>";
+    }
     
     public static function get_videos($term = 'teen', $page = '0') {
         $url = 'https://pornhub.com/video/search?search=' . $term . '&page=' . $page;
@@ -39,9 +50,16 @@ class Pornhub {
             $node = $xpath->query("div[@class='wrap']/div//div[contains(@class, 'videoPreviewBg')]/a", $element);
             $video->url = Pornhub::$url . $node->item(0)->getAttribute('href');
 
+            // Duracion
+            $node = $xpath->query("div[@class='wrap']/div//div[contains(@class, 'videoPreviewBg')]/div/var", $element);
+            $video->duration = $node->item(0)->nodeValue; // get the first node in the list which is a DOMAttr
+
             // Image url
             $node = $xpath->query("div[@class='wrap']/div//div[contains(@class, 'videoPreviewBg')]/a/img", $element);
             $video->img_src = $node->item(0)->getAttribute('data-thumb_url');
+
+            $video_code = Pornhub::get_video_code($video->url);
+            $video->iframe = Pornhub::get_iframe($video_code);
 
             $videos[] = $video;
         }
