@@ -4,8 +4,8 @@
         <div class="col-sm-12">
         <?php $tags = Xtube\Frontend\Models\Tag::get_tags();  ?>
         <?php foreach ($tags as $tag): ?>
-        <a class="" href="<?php echo esc_url(home_url()) . '/tag/' . $tag->name; ?>">
-            <span class="badge badge-danger"><?php echo $tag->name; ?></span>
+        <a class="badge badge-danger" href="<?php echo esc_url(home_url()) . '/tag/' . $tag->name; ?>">
+            <?php echo $tag->name; ?>
         </a>
         <?php endforeach;  ?>
         </div>
