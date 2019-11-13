@@ -1,31 +1,36 @@
 <?php $video_id = Xtube\Frontend\XtubeFrontend::get_query_var('xtb_video'); ?>
 <?php $video = Xtube\Frontend\Models\Video::get_video($video_id);?>
+<?php $tags = Xtube\Frontend\Models\Tag::get_tags_from_video($video_id);?>
 
 <div class="container">
     <div class="row">
         <div class="col-sm-9">
             <div class="row">
                 <div class="col-sm-12 text-center">
+                    <h3 class=""><?php echo $video->title; ?></h3>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 text-center">
                     <?php echo $video->iframe; ?>
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-12 text-center">
-                    <a class="" href="<?php echo $video->url; ?>"><?php echo $video->title; ?></a>
+                <div class="col-sm d-inline text-center">
+                    <i class="far fa-clock d-inline"> <?php echo $video->duration;?></i>
+                    <i class="far fa-eye d-inline"> <?php echo $video->views;?></i>
+                    <i class="far fa-thumbs-up d-inline"> <?php echo $video->upvotes;?></i>
+                    <i class="far fa-thumbs-down d-inline"> <?php echo $video->downvotes;?></i>
                 </div>
             </div>
+
             <div class="row">
-                <div class="col-sm-12 text-center">
-                    <p><?php echo $video->duration;?></p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12 text-center">
+                <div class="col-sm">
+                    VIDEO TAGS
                 </div>
             </div>
         </div>
-
-
 
         <div class="col-sm-3">
             <div class="row">
