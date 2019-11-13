@@ -7,7 +7,7 @@
     </div>
 </div>
 
-<div class="container">
+<div class="container vh-100">
     <div class="row">
         <?php $tag = Xtube\Frontend\XtubeFrontend::get_tag();?>
         <?php $count = 1; foreach ($videos as $video): ?>
