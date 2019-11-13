@@ -42,7 +42,7 @@ class Video {
 
     public static function get_videos_by_tag($tag_name) {
         global $wpdb;
-        $query = "SELECT * FROM xtb_videos AS t_videos
+        $query = "SELECT t_videos.* FROM xtb_videos AS t_videos
         JOIN XTB_VIDEO_TAGS AS t_vtag ON t_videos.id = t_vtag.video_id
         JOIN XTB_TAGS AS t_tags ON t_vtag.tag_id = t_tags.id
         WHERE name = '{$tag_name}'";
@@ -51,7 +51,7 @@ class Video {
 
     public static function get_paginated_videos_by_tag($tag_name, $limit, $offset) {
         global $wpdb;
-        $query = "SELECT * FROM xtb_videos AS t_videos
+        $query = "SELECT t_videos.* FROM xtb_videos AS t_videos
         JOIN XTB_VIDEO_TAGS AS t_vtag ON t_videos.id = t_vtag.video_id
         JOIN XTB_TAGS AS t_tags ON t_vtag.tag_id = t_tags.id
         WHERE name = '{$tag_name}'
