@@ -2,7 +2,6 @@
     <div class="row">
         <div class="col">
             <h1>Imports</h1>
-            <pre><?php //print_r($data);?></pre>
         </div>
     </div>
     <hr>
@@ -16,6 +15,7 @@
                 <select class="form-control" name="server">
                     <option value="xvideos">Xvideos</option>
                     <option value="pornhub">Pornhub</option>
+                    <option value="youtube">Youtube</option>
                 </select>
             </div>
 
@@ -38,7 +38,7 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12 text-center">
-                        <a class="" href="<?php echo $video->url; ?>"><?php echo $video->title; ?></a>
+                        <a class="" href="<?php echo $video->url; ?>"><?php echo utf8_decode($video->title); ?></a>
                     </div>
                 </div>
                 <div class="row">
@@ -85,8 +85,17 @@
     </form>
 
     <div class="row">
-        <pre>
-        <?php echo $data['pagination'];?>
-        </pre>
+        <?php //echo $data['pagination'];?>
+        <?php if (is_array($data['pagination'])): ?>
+        <ul class="pagination">
+            <?php foreach ($data['pagination'] as $link_data): ?>
+                <li class="<?php echo $link_data['li-class']; ?>">
+                    <a class="<?php echo $link_data['link-class']; ?>" href="<?php echo $link_data['href']; ?>">
+                        <?php echo $link_data['value']; ?>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+        <?php endif; ?>
     </div>
 </div>
