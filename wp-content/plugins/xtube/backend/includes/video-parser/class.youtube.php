@@ -6,6 +6,11 @@ use Xtube\Backend\Importers\Video;
 class Youtube {
     private static $domain = 'youtube.com';
 
+    public static function encodeToUtf8($string) {
+        $string = htmlentities($string);
+        return mb_convert_encoding($string, "UTF-8", mb_detect_encoding($string, "UTF-8, ISO-8859-1, ISO-8859-15", true));
+    }
+
     public static function build_url($keyword, $page) {
         $url = 'https://www.' . self::$domain;
         $url .= '/results?search_query=';
@@ -34,6 +39,7 @@ class Youtube {
         return "<iframe src=\"https://www.youtube.com/embed/$video_code\" allow=\"accelerometer; encrypted-media; gyroscope; picture-in-picture\" frameborder=0 width=510 height=400 scrolling=no allowfullscreen></iframe>";
     }
 
+    // Metodo principal de busqueda
     public static function search($keyword, $page) {
         $url = self::build_url($keyword, $page);
         $doc = new \DOMDocument;
@@ -45,31 +51,37 @@ class Youtube {
         return $data;
     }
 
+    // Este metodo extrae los videos y sus datos de la pagina de busqueda
     public static function parse_videos($xpath) {
+        // Array que contendra los videos
         $videos = array();
+
+        // Nodos li extraidos
         $video_elements = $xpath->query("//div[@id='results']//ol[@class='item-section']/li");
+
+        // Iteracion sobre cada nodo li
         foreach ($video_elements as $index => $li_node) {
+            // Creamos una instancia de Video con los parametros por defecto
             $video = new Video();
+
+            // Buscamos el enlace del video
             $hrefs = $xpath->query(".//div[contains(@class, 'yt-lockup-thumbnail')]/a/@href", $li_node);
             $href = $hrefs->item(0)->nodeValue;
-            $video_url = self::build_video_url($href);
 
-            // ID del video
-            $video->id = self::get_video_code($video_url);
+            // El enlace del video no utiliza la ruta absoluta sino relativa por lo que
+            // renconstruimos la url agregandole los parametros que faltan.
+            $video->url = self::build_video_url($href);
 
-            // Video url
-            $video->url = $video_url;
+            // ID del video que obtenemos desde la url
+            $video->id = self::get_video_code($video->url);
 
             // Video thumb
-            $images = $xpath->query(
-                ".//div[contains(@class, 'yt-lockup-thumbnail')]//span[@class='yt-thumb-simple']/img",
-                $li_node
-            );
+            $images = $xpath->query(".//div[contains(@class, 'yt-lockup-thumbnail')]//span[@class='yt-thumb-simple']/img", $li_node);
             $video->img_src = $images->item(0)->getAttribute('data-thumb');
 
-            // Si no encontramos la image en data-thumb
+            // Es posible que la imagen no se encuentre en el atributo data-thumb
+            // Si no encontramos la image en data-thumb, buscamos en src
             if (empty($video->img_src)) {
-                // Probamos en src
                 $video->img_src = $images->item(0)->getAttribute('src');
             }
 
@@ -79,7 +91,7 @@ class Youtube {
 
             // Titulo del video
             $titles = $xpath->query(".//div[contains(@class, 'yt-lockup-content')]/h3/a/@title", $li_node);
-            $video->title = $titles->item(0)->nodeValue;
+            $video->title = self::encodeToUtf8(utf8_decode($titles->item(0)->nodeValue));
 
             // Iframe
             $video->iframe = self::build_iframe($video->id);
@@ -88,36 +100,45 @@ class Youtube {
         return $videos;
     }
 
+    // Este metodo extrae la paginacion de la pagina
     public static function parse_pagination($xpath) {
-        $pagination = $xpath->query("//div[contains(@class, 'search-pager')]/*");
+        // Enlaces de la paginacion
         $links = array();
+        
+        // Xpath donde se encuentra la paginacion
+        $pagination = $xpath->query("//div[contains(@class, 'search-pager')]/*");
 
+        // Iteramos sobre los nodos
         foreach ($pagination as $index => $node) {
-            //echo $node->tagName;
+            // Datos por defecto del enlace
             $link_data = array(
                 'li-class' => 'page-item',
                 'link-class' => 'page-link',
                 'href' => '',
+                'tag' => '',
                 'value' => $node->nodeValue
             );
 
             // Si el tag es un boton significa que es la pagina actual
             if ($node->tagName == 'button') {
+                $link_data['tag'] = 'span';
                 $link_data['li-class'] = 'page-item active';
-                $link_data['link-class'] = 'page-link btn disabled';
             }
 
+            // Si el nodo es un enlace (a), entonces podemos navegar sobre el.
             if ($node->tagName == 'a') {
                 // Extraemos el hfref
                 $href = $node->getAttribute('href');
                 $span = $node->getElementsByTagName('span')->item(0);
                 $span_page = $span->nodeValue;
 
-                // Ignorar botones de atras/adelante
-                if (intval($span_page) == 0) {
+                // Ignorar botones de atras/adelante, solo si contiene un numero
+                // Interpretamos el boton.
+                if (!is_numeric($span_page)) {
                     continue;
                 }
 
+                // Creamos la direccion url que llevara el enlace
                 $link_data['href'] = self::build_pagination_url($href, $span_page);
 
                 // if contains class active ...

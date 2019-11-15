@@ -38,7 +38,7 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12 text-center">
-                        <a class="" href="<?php echo $video->url; ?>"><?php echo utf8_decode($video->title); ?></a>
+                        <a class="" href="<?php echo $video->url; ?>"><?php echo $video->title; ?></a>
                     </div>
                 </div>
                 <div class="row">
@@ -89,11 +89,17 @@
         <?php if (is_array($data['pagination'])): ?>
         <ul class="pagination">
             <?php foreach ($data['pagination'] as $link_data): ?>
-                <li class="<?php echo $link_data['li-class']; ?>">
+            <li class="<?php echo $link_data['li-class']; ?>">                    
+                <?php if ($link_data['tag'] == 'span'): ?>
+                    <span class="<?php echo $link_data['link-class']; ?>">
+                        <?php echo $link_data['value']; ?>
+                    </span>
+                <?php else: ?>
                     <a class="<?php echo $link_data['link-class']; ?>" href="<?php echo $link_data['href']; ?>">
                         <?php echo $link_data['value']; ?>
                     </a>
-                </li>
+                <?php endif; ?>
+            </li>
             <?php endforeach; ?>
         </ul>
         <?php endif; ?>
