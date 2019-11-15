@@ -8,8 +8,8 @@ importando videos de diferentes webs. El theme utiliza Bootstrap 4 y Font awesom
 - Xvideos
 
 ## Otras caracteristicas
-- Video Tag
-- Comentarios en vieo
-- Reporte de videos y comentarios
+- Sistema de tags para videos
+- Reporte de videos
 - Views, Upvotes y Downvotes para cada video
 - Widget para mostrar los videos mas vistos en la ultima semana
+- Automatizacion del plugin para importar videos de forma automatica utilizando cron
