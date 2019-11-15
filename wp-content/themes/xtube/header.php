@@ -34,12 +34,13 @@
             </a>
 
             <div class="collapse navbar-collapse" id="navbarColor01">
-                <form action="<?php echo home_url() . '/search/';?>" class="form-inline my-2 my-lg-0" method="get">
+                <form action="<?php echo admin_url('admin-post.php'); ?>" class="form-inline my-2 my-lg-0"
+                    method="post">
+                    <input type="hidden" name="action" value="search_videos_redirect">
                     <input class="form-control mr-sm-2" name="keyword" type="text" placeholder="Search">
                     <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
                 </form>
                 <?php wp_nav_menu(array('container' => '', 'menu_class' => 'navbar-nav mr-auto', 'theme_location'  => 'header-nav')); ?>
-                <?php wp_nav_menu(array('container' => '', 'menu_class' => 'dropdown-menu', 'theme_location' => 'header-nav-drop')); ?>
             </div>
         </nav>
     </header>
