@@ -2,7 +2,6 @@
     <div class="row">
         <div class="col">
             <h1>Tags</h1>
-            <pre><?php //print_r($data);?></pre>
         </div>
     </div>
     <hr>
@@ -30,7 +29,6 @@
                     <tr>
                         <th scope="col">id</th>
                         <th scope="col">Tag name</th>
-                        <th scope="col">Tag description</th>
                         <th scope="col">Manage</th>
                     </tr>
                 </thead>
@@ -40,7 +38,6 @@
                     <tr>
                         <th scope="row"><?php echo $tag->id; ?></th>
                         <td><?php echo $tag->name; ?></td>
-                        <td><?php echo $tag->description; ?></td>
                         <td>
                             <form class="form-inline" action="<?php echo esc_url(admin_url('admin-post.php')); ?>"
                                 method="post">

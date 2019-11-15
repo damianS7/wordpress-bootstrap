@@ -7,7 +7,7 @@
     </div>
 </div>
 
-<div class="container vh-100">
+<div class="container">
     <div class="row">
         <?php $count = 1; foreach ($videos as $video): ?>
         <?php if ($count % 4 == 1): ?>

@@ -10,11 +10,6 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: xtube
 */
 
-
-footer {
-    background-color: black;
-}
-
 .button-go-up {
     display:scroll;
     position:fixed;
@@ -24,4 +19,12 @@ footer {
     background-color:#333;
     padding:15px 25px;
     z-index: 9999999999;
+}
+
+#top-widget {
+    font-size:10px;
+}
+
+#top-widget .nav-link {
+    padding: 0 0 0 5px;
 }
