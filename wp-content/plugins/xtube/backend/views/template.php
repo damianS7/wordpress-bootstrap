@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div id="messages" class="row mt-3">
         <div class="col-sm-12">
-            <?php include_once(PLUGIN_DIR . 'backend/includes/message.php'); ?>
+            <?php include_once(PLUGIN_DIR . 'backend/views/message.php'); ?>
         </div>
     </div>
     <div id="view" class="row">
