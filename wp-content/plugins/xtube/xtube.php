@@ -30,8 +30,6 @@ if (is_admin()) {
 }
 
 // FRONTEND
-if (!is_admin() || wp_doing_ajax()) {
-}
 require_once(PLUGIN_DIR . 'frontend/class.xtube-frontend.php');
 $frontend = new Xtube\Frontend\XtubeFrontend();
 add_action('init', array( $frontend, 'init' ));
