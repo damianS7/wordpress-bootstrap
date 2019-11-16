@@ -65,6 +65,13 @@ class VideoImportController {
                     
                     foreach ($tags as $tag) {
                         $tag = trim($tag);
+
+                        // Tag sin contenido no permitidos
+                        if (empty($tag)) {
+                            continue;
+                        }
+
+                        // Insertamos el tag en la db
                         Tag::add_tag_ignore($tag);
                         
                         // Buscamos el id del tag
