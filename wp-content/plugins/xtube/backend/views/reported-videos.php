@@ -26,11 +26,11 @@
                                 <div class="input-group">
                                     <span class="input-group-btn">
                                         <button type="submit" name="delete_report"
-                                            class="btn btn-success btn-sm">DELETE REPORT <i
+                                            class="btn btn-success btn-sm btn-block">IGNORE <i
                                                 class="fa fa-angle-right"></i></button>
 
                                         <button type="submit" name="delete_video"
-                                            class="btn btn-success btn-sm">DELETE VIDEO<i
+                                            class="btn btn-success btn-sm btn-block">DELETE VIDEO<i
                                                 class="fa fa-angle-right"></i></button>
                                     </span>
                                 </div>
