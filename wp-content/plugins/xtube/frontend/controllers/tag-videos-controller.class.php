@@ -16,7 +16,7 @@ class TagVideosController {
         $videos_per_page = Setting::get_setting('videos_per_page');
         
         // Numero de posts del topic
-        $total_videos = Video::count_videos_from_tag($tag_name);
+        $total_videos = Video::count_videos_with_tag($tag_name);
         
         // Paginas en las que se divide el topic
         $pages = ceil($total_videos / $videos_per_page);

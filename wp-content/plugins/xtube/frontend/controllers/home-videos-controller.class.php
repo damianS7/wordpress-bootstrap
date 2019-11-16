@@ -40,7 +40,7 @@ class HomeVideosController {
         $offset = ($page - 1) * $videos_per_page;
                 
         // Videos de la vista
-        $data['videos'] = Video::get_videos_paginate($videos_per_page, $offset);
+        $data['videos'] = Video::get_paginated_videos($videos_per_page, $offset);
 
         // Datos de paginacion
         $data['pagination'] = Paginator::get_pagination($pages, $page);

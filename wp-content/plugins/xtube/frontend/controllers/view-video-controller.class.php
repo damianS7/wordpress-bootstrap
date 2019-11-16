@@ -13,7 +13,7 @@ class ViewVideoController {
         $video_id = XtubeFrontend::get_query_var('xtb_video');
 
         // El video no existe
-        if (!Video::video_exists($video_id)) {
+        if (!Video::video_id_exists($video_id)) {
             return;
         }
 
@@ -34,7 +34,7 @@ class ViewVideoController {
         $video_id = XtubeFrontend::get_video_id();
 
         // Si el video no existe ...
-        if (!Video::video_exists($video_id)) {
+        if (!Video::video_id_exists($video_id)) {
             return;
         }
 
@@ -42,7 +42,7 @@ class ViewVideoController {
 
         if (Video::get_ip_from_video_views($video_id, $ip) == 0) {
             // Agregar view
-            Video::update_views($video_id);
+            Video::video_views_update($video_id);
             Video::add_ip_to_video_views($video_id, $ip);
         }
     }
