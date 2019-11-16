@@ -11,13 +11,13 @@
 <?php include_once('tag-cloud.php'); ?>
 <hr>
 <?php if (Xtube\Frontend\XtubeFrontend::get_view() == 'tag'): ?>
-<?php include_once('tag.php'); ?>
+<?php Xtube\Frontend\Controllers\TagVideosController::render(); ?>
 <?php elseif (Xtube\Frontend\XtubeFrontend::get_view() == 'search'): ?>
-<?php include_once('search.php'); ?>
+<?php Xtube\Frontend\Controllers\SearchVideosController::render(); ?>
 <?php elseif (Xtube\Frontend\XtubeFrontend::get_view() == 'video'): ?>
-<?php include_once('video.php'); ?>
-<?php else: ?>
-<?php include_once('videos.php'); ?>
+<?php Xtube\Frontend\Controllers\ViewVideoController::render(); ?>
+<?php else: // Vista por defecto?>
+<?php Xtube\Frontend\Controllers\HomeVideosController::render(); ?>
 <?php endif; ?>
 
 <?php get_footer(); ?>

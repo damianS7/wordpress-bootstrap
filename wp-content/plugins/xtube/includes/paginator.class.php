@@ -2,6 +2,9 @@
 namespace Xtube\Common;
 
 class Paginator {
+    public static function print_pagination($total_pages, $current_page) {
+    }
+    
     // Metodo que devuelve un array con las paginas que corresponden a cada boton
     public static function get_pagination($total_pages, $current_page) {
         $pages = array();

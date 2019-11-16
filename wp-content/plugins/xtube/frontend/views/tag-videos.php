@@ -1,16 +1,16 @@
-<?php $videos = Xtube\Frontend\Controllers\VideoController::get_videos_search(); ?>
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-            <?php Xtube\Frontend\Controllers\VideoController::print_pagination_search(); ?>
+            <?php include('pagination.php'); ?>
         </div>
     </div>
 </div>
 
 <div class="container">
     <div class="row">
-        <?php $count = 1; foreach ($videos as $video): ?>
-        <?php if ($count % 4 == 1): ?>
+        <?php $tag = Xtube\Frontend\XtubeFrontend::get_tag();?>
+        <?php $count = 1; foreach ($data['videos'] as $video): ?>
+        <?php if ($count % 4 == 1):  ?>
         <div class="w-100 mb-3"></div>
         <?php endif; $count++; ?>
 
@@ -41,10 +41,11 @@
     </div>
 </div>
 
+
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-            <?php Xtube\Frontend\Controllers\VideoController::print_pagination_search(); ?>
+            <?php include('pagination.php'); ?>
         </div>
     </div>
 </div>

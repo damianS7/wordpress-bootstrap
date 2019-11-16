@@ -6,13 +6,17 @@ use Xtube\Frontend\Models\Setting;
 use Xtube\Frontend\Models\Video;
 use Xtube\Common\Paginator;
 
-class VideoController {
-    public static function get_videos() {
+class TagVideosController {
+
+    // Metodo para renderizar la vista.
+    public static function render() {
+        $tag_name = XtubeFrontend::get_tag();
+
         // Posts por pagina
         $videos_per_page = Setting::get_setting('posts_per_page');
         
         // Numero de posts del topic
-        $total_videos = Video::count_videos();
+        $total_videos = Video::count_videos_from_tag($tag_name);
         
         // Paginas en las que se divide el topic
         $pages = ceil($total_videos / $videos_per_page);
@@ -30,20 +34,11 @@ class VideoController {
         // Offset desde que empezamos a leer resultados de la tabla
         $offset = ($page - 1) * $videos_per_page;
                 
-        // Posts del topic
-        return Video::get_videos_paginate($videos_per_page, $offset);
-    }
+        // Videos de la vista
+        $data['videos'] = Video::get_paginated_videos_by_tag($tag_name, $videos_per_page, $offset);
 
-    public static function print_pagination() {
-        $page = XtubeFrontend::get_query_var('xtb_pagination');
-        $videos_per_page = Setting::get_setting('posts_per_page');
-        // Numero de posts del topic
-        $total_videos = Video::count_videos();
-        
-        // Paginas en las que se divide el topic
-        $pages = ceil($total_videos / $videos_per_page);
-
+        // Datos de paginacion
         $data['pagination'] = Paginator::get_pagination($pages, $page);
-        include(PLUGIN_DIR . 'frontend/views/pagination.php');
+        return XtubeFrontend::view('tag-videos', $data);
     }
 }
