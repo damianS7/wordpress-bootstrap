@@ -9,6 +9,45 @@ use Xtube\Backend\Models\Video;
 use Xtube\Backend\Models\Tag;
 
 class VideoImportController {
+    public static function import($video) {
+        $video_id = Video::add_video_ignore(
+            $video->url,
+            $video->title,
+            $video->img_src,
+            $video->duration,
+            $video->upvotes,
+            $video->downvotes,
+            $video->views,
+            $video->iframe
+        );
+
+        // Si no encontramos el id es aue no se inserto
+        if ($video_id === null || $video_id == 0) {
+            return false;
+        }
+        
+        // Agregar tags del video a la db
+        $tags = explode(',', sanitize_text_field($_POST['tags']));
+                    
+        foreach ($tags as $tag) {
+            $tag = trim($tag);
+
+            // Tag sin contenido no permitidos
+            if (empty($tag)) {
+                continue;
+            }
+
+            // Insertamos el tag en la db
+            Tag::add_tag_ignore($tag);
+                        
+            // Buscamos el id del tag
+            $tag_id = Tag::get_tag_id($tag);
+
+            Tag::add_tag_to_video($video_id, $tag_id);
+        }
+        return true;
+    }
+    
     public function search($server, $keyword, $page = '1') {
         switch ($server) {
             case 'xvideos': return XVideos::search($keyword, $page);
@@ -48,37 +87,7 @@ class VideoImportController {
                 $videos_marked_to_import[] = $video_search['videos'][$index];
                 $video = $video_search['videos'][$index];
                 
-                $video_id = Video::add_video_ignore(
-                    $video->url,
-                    $video->title,
-                    $video->img_src,
-                    $video->duration,
-                    $video->upvotes,
-                    $video->downvotes,
-                    $video->views,
-                    $video->iframe
-                );
-
-                if ($video_id !== null && $video_id != 0) {
-                    // Agregar tags del video a la db
-                    $tags = explode(',', sanitize_text_field($_POST['tags']));
-                    
-                    foreach ($tags as $tag) {
-                        $tag = trim($tag);
-
-                        // Tag sin contenido no permitidos
-                        if (empty($tag)) {
-                            continue;
-                        }
-
-                        // Insertamos el tag en la db
-                        Tag::add_tag_ignore($tag);
-                        
-                        // Buscamos el id del tag
-                        $tag_id = Tag::get_tag_id($tag);
-
-                        Tag::add_tag_to_video($video_id, $tag_id);
-                    }
+                if (self::import($video)) {
                     $imported++;
                 }
             }
