@@ -3,6 +3,43 @@ namespace Xtube\Backend\Models;
 
 // Esta clase interactua con la tabla XTB_VIDEOS
 class Video {
+    public static function add_video_ignore($url, $title, $img_src, $duration, $upvotes, $downvotes, $views, $iframe) {
+        global $wpdb;
+        $wpdb->query($wpdb->prepare(
+            "
+        INSERT IGNORE XTB_VIDEOS
+            (url, iframe, title, img_src, duration, views, upvotes, downvotes )
+            VALUES (%s, %s, %s, %s, %d, %d, %d, %d )",
+            $url,
+            $iframe,
+            $title,
+            $img_src,
+            $duration,
+            $views,
+            $upvotes,
+            $downvotes
+        ));
+        return $wpdb->insert_id;
+    }
+
+    public static function add_video_ignore2($url, $title, $img_src, $duration, $upvotes, $downvotes, $views, $iframe) {
+        global $wpdb;
+        $wpdb->query($wpdb->prepare(
+            "
+        INSERT INTO XTB_VIDEOS
+            (url, iframe, title, img_src, duration, views, upvotes, downvotes )
+            VALUES (%s, %s, %s, %d, %d, %d, %d, %s )
+            ON DUPLICATE KEY UPDATE url=url;",
+            $url,
+            $iframe,
+            $title,
+            $img_src,
+            $duration,
+            $views,
+            $upvotes,
+            $downvotes
+        ));
+    }
 
     // Este metodo se usa para insertar videos en la DB
     public static function add_video($url, $title, $img_src, $duration, $upvotes, $downvotes, $views, $iframe) {
