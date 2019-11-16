@@ -13,3 +13,6 @@ importando videos de diferentes webs. El theme utiliza Bootstrap 4 y Font awesom
 - Views, Upvotes y Downvotes para cada video
 - Widget para mostrar los videos mas vistos en la ultima semana
 - Automatizacion del plugin para importar videos de forma automatica utilizando cron
+ 
+## Pendiente
+- Cron
