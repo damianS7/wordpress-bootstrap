@@ -12,7 +12,7 @@ class SearchVideosController {
     public static function render() {
         $keyword = XtubeFrontend::get_keyword();
         // Posts por pagina
-        $videos_per_page = Setting::get_setting('posts_per_page');
+        $videos_per_page = Setting::get_setting('videos_per_page');
         
         // Numero de posts del topic
         $total_videos = Video::count_videos_with_keyword($keyword);

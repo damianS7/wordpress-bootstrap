@@ -19,7 +19,7 @@ class HomeVideosController {
     // Metodo para renderizar la vista.
     public static function render() {
         // Videos a mostrar por pagina
-        $videos_per_page = Setting::get_setting('posts_per_page');
+        $videos_per_page = Setting::get_setting('videos_per_page');
         
         // Numero de videos existentes
         $total_videos = Video::count_videos();
