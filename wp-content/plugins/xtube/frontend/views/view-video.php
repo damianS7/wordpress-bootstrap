@@ -18,10 +18,10 @@
                     <i class="far fa-clock d-inline"> <?php echo $video->duration;?></i>
                     <i class="far fa-eye d-inline"> <?php echo $video->views;?></i>
                     <button onClick="vote('y');" class="btn btn-sm btn-success"><i class="far fa-thumbs-up d-inline">
-                            <?php echo $video->upvotes;?></i>
+                            <?php echo $video->votes;?></i>
                     </button>
                     <button onClick="vote('n');" class="btn btn-sm btn-danger"><i class="far fa-thumbs-down d-inline">
-                            <?php echo $video->downvotes;?></i>
+                            <?php echo $video->votes;?></i>
                     </button>
 
                     <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target=".report-modal">

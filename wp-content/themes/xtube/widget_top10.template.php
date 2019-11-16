@@ -17,8 +17,7 @@
                 <div class="col-sm d-inline text-center">
                     <i class="far fa-clock d-inline"> <?php echo $video->duration;?></i>
                     <i class="far fa-eye d-inline"> <?php echo $video->views;?></i>
-                    <i class="far fa-thumbs-up d-inline"> <?php echo $video->upvotes;?></i>
-                    <i class="far fa-thumbs-down d-inline"> <?php echo $video->downvotes;?></i>
+                    <i class="far fa-thumbs-up d-inline"> <?php echo $video->votes;?></i>
                 </div>
             </div>
         </div>

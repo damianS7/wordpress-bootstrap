@@ -14,8 +14,7 @@ class XtubeInstall {
             img_src VARCHAR(300) NOT NULL,
             duration VARCHAR(10) NOT NULL DEFAULT(0),
             views INT NOT NULL DEFAULT(0),
-            upvotes INT NOT NULL DEFAULT(0),
-            downvotes INT NOT NULL DEFAULT(0),
+            votes INT NOT NULL DEFAULT(0),
             posted_at TIMESTAMP NOT NULL DEFAULT (CURRENT_TIMESTAMP), 
             PRIMARY KEY(id)
         ) ENGINE=InnoDB;';
