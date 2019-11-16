@@ -4,18 +4,17 @@ namespace Xtube\Backend\Controllers;
 use Xtube\Backend\XtubeBackend;
 use Xtube\Backend\Importers\XVideos;
 use Xtube\Backend\Importers\Pornhub;
+use Xtube\Backend\Importers\Youtube;
 use Xtube\Backend\Models\Video;
 use Xtube\Backend\Models\Tag;
 
-class ImportsController {
-    public function __construct() {
-    }
-
+class VideoImportController {
     public function search($server, $keyword, $page = '1') {
         switch ($server) {
-            case 'xvideos': return XVideos::get_videos($keyword, $page);
-            case 'pornhub': return Pornhub::get_videos($keyword, $page);
-            default: return XVideos::get_videos($keyword, $page);
+            case 'xvideos': return XVideos::search($keyword, $page);
+            case 'pornhub': return Pornhub::search($keyword, $page);
+            case 'youtube': return Youtube::search($keyword, $page);
+            default: return XVideos::search($keyword, $page);
         }
     }
 

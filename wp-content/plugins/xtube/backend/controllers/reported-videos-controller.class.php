@@ -4,10 +4,14 @@ namespace Xtube\Backend\Controllers;
 use Xtube\Backend\XtubeBackend;
 use Xtube\Backend\Importers\XVideos;
 use Xtube\Backend\Importers\Pornhub;
-use Xtube\Backend\Models\ReportedComment;
+use Xtube\Backend\Models\ReportedVideo;
 
-class CommentsController {
+class ReportedVideosController {
     public function __construct() {
+    }
+
+    public static function video_report() {
+        echo 'reporting video';
     }
 
     // Metodo para procesar los formularios (POST)
@@ -30,7 +34,7 @@ class CommentsController {
             delete_transient('view_data');
         }
         
-        $data['reported_comments'] = ReportedComment::get_reports();
-        return XtubeBackend::view('comments.php', $data);
+        $data['reported_videos'] = ReportedVideo::get_reports();
+        return XtubeBackend::view('reported-videos.php', $data);
     }
 }
