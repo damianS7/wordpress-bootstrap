@@ -8,7 +8,6 @@ function ajax_post(url, data) {
             console.log(response);
         },
         success: function (response) {
-            // Actualiza el mensaje con la respuesta
             console.log('success:: ' + response);
         }
     });
@@ -25,7 +24,7 @@ function report() {
         "action": "video_report",
         "nonce": ajax_var.nonce
     }
-    ajax_post(ajax_var.url, data);
+    ajax_post2(ajax_var.url, data);
 }
 
 function vote(v) {
@@ -34,30 +33,27 @@ function vote(v) {
         "vote": v,
         "video_id": video_id,
         "url": ajax_var.url,
-        "action": ajax_var.action,
+        "action": "video_vote",
         "nonce": ajax_var.nonce
     }
 
-    jQuery.ajax({
-        type: "post",
-        url: ajax_var.url,
-        data: data,
-        error: function (response) {
-            console.log(response);
-        },
-        success: function (response) {
-            // Actualiza el mensaje con la respuesta
-            console.log('success:: ' + response);
-        }
+    ajax_post2(ajax_var.url, data);
+}
+
+function ajax_post2(url, data) {
+    var url = '';
+    Object.keys(data).forEach(function (key) {
+        url += '&' + key + '=' + data[key];
     });
-    /*
-     var url = 'action=' + ajax_var.action + '&nonce=' + ajax_var.nonce;
-     url += '&vote=' + video_id + '&vote=' + vote;
- 
-     fetch(ajax_var.url, {
-         method: "POST",
-         credentials: 'same-origin',
-         headers: { 'Content-type': 'application/x-www-form-urlencoded' },
-         body: url
-     });*/
+
+    var headers = {
+        'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'
+    };
+
+    fetch(ajax_var.url, {
+        method: "POST",
+        credentials: 'same-origin',
+        headers: headers,
+        body: url
+    });
 }
