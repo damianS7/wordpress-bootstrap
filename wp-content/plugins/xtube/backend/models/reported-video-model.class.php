@@ -5,7 +5,10 @@ namespace Xtube\Backend\Models;
 class ReportedVideo {
     public static function get_reports() {
         global $wpdb;
-        $query = "SELECT * FROM XTB_VIDEOS_REPORT";
+        $query = "SELECT t_videos.id, t_videos.url, t_reports.id AS report_id, t_reports.reason 
+        FROM XTB_VIDEO_REPORTS AS t_reports
+        INNER JOIN XTB_VIDEOS AS t_videos
+        ON t_reports.video_id = t_videos.id";
         return $wpdb->get_results($query);
     }
 
@@ -16,7 +19,7 @@ class ReportedVideo {
             'id' => $report_id
         );
         // Si no se borra nada
-        if (!$wpdb->delete('XTB_VIDEOS_REPORT', $where)) {
+        if (!$wpdb->delete('XTB_VIDEO_REPORTS', $where)) {
             return false;
         }
         return true;

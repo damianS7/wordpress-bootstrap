@@ -5,26 +5,31 @@ use Xtube\Backend\XtubeBackend;
 use Xtube\Backend\Importers\XVideos;
 use Xtube\Backend\Importers\Pornhub;
 use Xtube\Backend\Models\ReportedVideo;
+use Xtube\Backend\Models\Video;
 
 class ReportedVideosController {
-    public function __construct() {
-    }
-
-    public static function video_report() {
-        echo 'reporting video';
-    }
 
     // Metodo para procesar los formularios (POST)
     public function handle_forms() {
-        if (isset($_POST['delete_reported_comment_submit'])) {
-            $report_id = sanitize_text_field($_POST['repored_comment_id']);
-            ReportedComment::delete_report($report_id);
+        $report_id = sanitize_text_field($_POST['report_id']);
+        $video_id = sanitize_text_field($_POST['video_id']);
+        
+        if (isset($_POST['delete_report'])) {
+            ReportedVideo::delete_report($report_id);
             $data['success'] = 'report deleted.';
             set_transient('view_data', $data, 10);
         }
+            
+        if (isset($_POST['delete_video'])) {
+            ReportedVideo::delete_report($report_id);
+            Video::delete_video($video_id);
+            $data['success'] = 'report & video deleted.';
+            set_transient('view_data', $data, 10);
+        }
         
-        wp_redirect($_SERVER['HTTP_REFERER']);
-        exit;
+        if (wp_redirect($_SERVER['HTTP_REFERER'])) {
+            exit;
+        }
     }
 
     // Metodo para renderizar la vista.

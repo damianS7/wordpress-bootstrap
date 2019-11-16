@@ -1,42 +1,49 @@
-<h1>Comments</h1>
-<p>My viw</p>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>Reported videos</h1>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Reason</th>
+                        <th scope="col">URL</th>
+                        <th scope="col">Manage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (isset($data['reported_videos'])): ?>
+                    <?php foreach ($data['reported_videos'] as $video): ?>
+                    <form class="form-inline" action="<?php echo esc_url(admin_url('admin-post.php'));?>" method="post">
+                        <tr>
+                            <td> <textarea name="" id="" cols="30" rows="4"> <?php echo $video->reason; ?> </textarea></td>
+                            <td> <a href="<?php echo $video->url; ?>"><?php echo $video->url; ?></a></td>
+                            <td>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button type="submit" name="delete_report"
+                                            class="btn btn-success btn-sm">DELETE REPORT <i
+                                                class="fa fa-angle-right"></i></button>
 
-<?php if (isset($data['reported_comments'])):?>
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="col">id</th>
-            <th scope="col">comment_id</th>
-            <th scope="col">reason</th>
-            <th scope="col">manage</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach ($data['reported_comments'] as $report): ?>
-        <form class="form-inline" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
-            <tr>
-                <td><?php echo $report->id; ?></td>
-                <td><input type="text" name="setting_value" value="<?php echo $report->comment_id; ?>"></td>
-                <td><?php echo $report->reason; ?></td>
-                <td>
-                    <div class="input-group">
-                        <span class="input-group-btn">
-                            <button type="submit" name="delete_reported_comment_submit"
-                                class="btn btn-success btn-sm">DELETE <i class="fa fa-angle-right"></i></button>
-                        </span>
-                    </div>
-                    <input type="hidden" name="action" value="reported_comments">
-                    <input type="hidden" name="repored_comment_id" value="<?php echo $report->id; ?>">
-                </td>
-            </tr>
-        </form>
-        <?php endforeach; ?>
-    </tbody>
-</table>
-
-
-<?php endif; ?>
-
-<form action="" method="post">
-    <button type="submit">submit</button>
-</form>
+                                        <button type="submit" name="delete_video"
+                                            class="btn btn-success btn-sm">DELETE VIDEO<i
+                                                class="fa fa-angle-right"></i></button>
+                                    </span>
+                                </div>
+                                <input type="hidden" name="action" value="reported_videos_controller">
+                                <input type="hidden" name="report_id" value="<?php echo $video->report_id; ?>">
+                                <input type="hidden" name="video_id" value="<?php echo $video->id; ?>">
+                            </td>
+                        </tr>
+                    </form>
+                    <?php endforeach; ?>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
