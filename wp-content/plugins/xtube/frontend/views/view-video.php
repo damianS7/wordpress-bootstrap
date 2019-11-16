@@ -76,7 +76,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onClick="report();">Send report</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onClick="report();">Send report</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
