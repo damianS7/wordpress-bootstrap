@@ -61,6 +61,11 @@ class Youtube {
 
         // Iteracion sobre cada nodo li
         foreach ($video_elements as $index => $li_node) {
+            $class_div = $li_node->childNodes->item(0)->getAttribute('class');
+            if (strpos($class_div, 'ads-container') !== false) {
+                continue;
+            }
+
             // Creamos una instancia de Video con los parametros por defecto
             $video = new Video();
 
@@ -87,6 +92,12 @@ class Youtube {
 
             // Duracion
             $span = $xpath->query(".//div[contains(@class, 'yt-lockup-thumbnail')]//span[@class='video-time']", $li_node);
+            
+            // Si no se encontro el texto con la duracion, es un stream en directo
+            if (count($span) == 0) {
+                continue;
+            }
+            
             $video->duration = $span->item(0)->nodeValue;
 
             // Titulo del video
