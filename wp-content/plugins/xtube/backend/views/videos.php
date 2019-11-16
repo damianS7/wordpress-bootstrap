@@ -30,7 +30,7 @@
             </div>
 
             <div class="col-sm-2 form-group">
-                <button type="submit" name="create_video" class="btn btn-block btn-primary">NEW VIDEO</button>
+                <button type="submit" name="create_video" class="btn btn-block btn-primary">ADD VIDEO</button>
             </div>
         </div>
 
