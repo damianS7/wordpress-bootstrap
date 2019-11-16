@@ -1,10 +1,11 @@
 <?php
 namespace Xtube\Backend\Models;
 
-class ReportedComment {
+// Esta clase interactua con la tabla XTB_VIDEOS_REPORT
+class ReportedVideo {
     public static function get_reports() {
         global $wpdb;
-        $query = "SELECT * FROM XTB_REPORTED_COMMENTS";
+        $query = "SELECT * FROM XTB_VIDEOS_REPORT";
         return $wpdb->get_results($query);
     }
 
@@ -15,7 +16,7 @@ class ReportedComment {
             'id' => $report_id
         );
         // Si no se borra nada
-        if (!$wpdb->delete('XTB_REPORTED_COMMENTS', $where)) {
+        if (!$wpdb->delete('XTB_VIDEOS_REPORT', $where)) {
             return false;
         }
         return true;
