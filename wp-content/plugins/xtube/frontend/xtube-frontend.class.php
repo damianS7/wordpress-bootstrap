@@ -8,7 +8,8 @@ use Xtube\Frontend\Controllers\VideoReportController;
 require_once(PLUGIN_DIR . 'frontend/controllers/home-videos-controller.class.php');
 require_once(PLUGIN_DIR . 'frontend/controllers/view-video-controller.class.php');
 require_once(PLUGIN_DIR . 'frontend/controllers/search-videos-controller.class.php');
-require_once(PLUGIN_DIR . 'frontend/controllers/video-report.class.php');
+require_once(PLUGIN_DIR . 'frontend/controllers/report-video-controller.class.php');
+require_once(PLUGIN_DIR . 'frontend/controllers/vote-video-controller.class.php');
 require_once(PLUGIN_DIR . 'frontend/controllers/tag-videos-controller.class.php');
 require_once(PLUGIN_DIR . 'includes/paginator.class.php');
 require_once(PLUGIN_DIR . 'frontend/models/tag-model.class.php');
@@ -158,11 +159,11 @@ class XtubeFrontend {
     public function init() {
         add_action('init', array( $this, 'rewrite_rules' ), 9999);
         add_filter('query_vars', array( $this, 'add_custom_query_var'));
-        add_action('wp_ajax_video_vote', 'Xtube\Frontend\Controllers\ViewVideoController::video_vote');
-        add_action('wp_ajax_nopriv_video_vote', 'Xtube\Frontend\Controllers\ViewVideoController::video_vote');
+        add_action('wp_ajax_video_vote', 'Xtube\Frontend\Controllers\VoteVideoController::vote');
+        add_action('wp_ajax_nopriv_video_vote', 'Xtube\Frontend\Controllers\VoteVideoController::vote');
         
-        add_action('wp_ajax_video_report', 'Xtube\Frontend\Controllers\VideoReportController::video_report');
-        add_action('wp_ajax_nopriv_video_report', 'Xtube\Frontend\Controllers\VideoReportController::video_report');
+        add_action('wp_ajax_video_report', 'Xtube\Frontend\Controllers\ReportVideoController::report');
+        add_action('wp_ajax_nopriv_video_report', 'Xtube\Frontend\Controllers\ReportVideoController::report');
         add_action('admin_post_search_videos_redirect', array($this, 'search_redirect'));
      
         // Actualizar contador de vistas
