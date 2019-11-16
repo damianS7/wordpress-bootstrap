@@ -40,16 +40,15 @@ class VideoImportController {
 
         if (isset($_POST['import_submit'])) {
             $video_search = get_transient('xtb_last_videos_search');
-            $video_index = $_POST['video_list'];
-
+            $videos_index = $_POST['video_list'];
             $videos_marked_to_import = array();
-
             $imported = 0;
             // Indices seleccionados
-            foreach ($video_index as $index) {
+            foreach ($videos_index as $index) {
                 $videos_marked_to_import[] = $video_search['videos'][$index];
                 $video = $video_search['videos'][$index];
-                $video_id = Video::add_video(
+                
+                $video_id = Video::add_video_ignore(
                     $video->url,
                     $video->title,
                     $video->img_src,
@@ -60,7 +59,7 @@ class VideoImportController {
                     $video->iframe
                 );
 
-                if ($video_id !== null) {
+                if ($video_id !== null && $video_id != 0) {
                     // Agregar tags del video a la db
                     $tags = explode(',', sanitize_text_field($_POST['tags']));
                     
@@ -78,7 +77,7 @@ class VideoImportController {
             }
 
             $data['success'] = 'Imported: ' . $imported . ' / ' . count($videos_marked_to_import);
-            $data['videos_to_import'] = $videos_marked_to_import;
+            //$data['videos_to_import'] = $videos_marked_to_import;
             
             set_transient('imports_view_data', $data, 60*60*2);
 
