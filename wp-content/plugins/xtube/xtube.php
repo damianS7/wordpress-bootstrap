@@ -19,7 +19,7 @@ define('PLUGIN_DIR', plugin_dir_path(__FILE__));
 
 // BACKEND (WP-ADMIN)
 if (is_admin()) {
-    require_once(PLUGIN_DIR . 'backend/class.xtube-backend.php');
+    require_once(PLUGIN_DIR . 'backend/xtube-backend.class.php');
     require_once(PLUGIN_DIR . 'install.php');
     $install = new XtubeInstall();
     register_activation_hook(__FILE__, array( $install, 'plugin_activation' ));
