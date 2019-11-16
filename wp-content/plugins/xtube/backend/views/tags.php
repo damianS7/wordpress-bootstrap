@@ -5,25 +5,8 @@
         </div>
     </div>
     <hr>
-
-    <form class="form" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
-        <input type="hidden" name="action" value="tags_controller">
-        <div class="row">
-            <div class="col-sm-2 form-group">
-                <input type="text" class="form-control" name="name" placeholder="Tag name">
-            </div>
-            <div class="col-sm-6 form-group">
-                <input type="text" class="form-control" name="description" placeholder="Tag description">
-            </div>
-            <div class="col-sm-4 form-group">
-                <button type="submit" name="create_tag" class="btn btn-block btn-primary">NEW TAG</button>
-            </div>
-        </div>
-    </form>
-
     <div class="row">
         <div class="col">
-
             <table class="table table-hover">
                 <thead>
                     <tr>
