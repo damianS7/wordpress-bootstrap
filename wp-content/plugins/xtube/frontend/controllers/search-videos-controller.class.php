@@ -7,6 +7,11 @@ use Xtube\Frontend\Models\Video;
 use Xtube\Common\Paginator;
 
 class SearchVideosController {
+    public static function redirect() {
+        if (wp_redirect(XtubeFrontend::pagination_url('search', $_POST['keyword'], 1))) {
+            exit;
+        }
+    }
     
     // Metodo para renderizar la vista.
     public static function render() {

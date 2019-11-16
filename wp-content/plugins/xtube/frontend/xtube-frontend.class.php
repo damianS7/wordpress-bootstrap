@@ -147,15 +147,6 @@ class XtubeFrontend {
         flush_rewrite_rules();
     }
 
-
-    // --------------- sin debug
-
-    public function search_redirect() {
-        if (wp_redirect(XtubeFrontend::pagination_url('search', $_POST['keyword'], 1))) {
-            exit;
-        }
-    }
-
     public function init() {
         add_action('init', array( $this, 'rewrite_rules' ), 9999);
         add_filter('query_vars', array( $this, 'add_custom_query_var'));
@@ -164,7 +155,7 @@ class XtubeFrontend {
         
         add_action('wp_ajax_video_report', 'Xtube\Frontend\Controllers\ReportVideoController::report');
         add_action('wp_ajax_nopriv_video_report', 'Xtube\Frontend\Controllers\ReportVideoController::report');
-        add_action('admin_post_search_videos_redirect', array($this, 'search_redirect'));
+        add_action('admin_post_search_videos_redirect', 'Xtube\Frontend\Controllers\SearchVideosController::redirect');
      
         // Actualizar contador de vistas
         add_action('wp', 'Xtube\Frontend\Controllers\ViewVideoController::video_views_check');
